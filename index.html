@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+	<title>Slider</title>
+	<script src="https://unpkg.com/react@16/umd/react.production.min.js">
+	</script>
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js">
+	</script>
+	<link href="extreme-carousel.css" rel="stylesheet">
+</head>
+<body>
+	<div class="sevenlineSlider" id="sevenlineSlider"></div>
+	<script src="sevenlineSlider.js">
+	</script> 
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
+	</script> 
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js">
+	</script> 
+	<script>
+	       (function($) {
+	           var touchStartX = null;
+	           $('.carousel').each(function() {
+	               var $carousel = $(this);
+	               $(this).on('touchstart', function(event) {
+	                   var e = event.originalEvent;
+	                   if (e.touches.length == 1) {
+	                       var touch = e.touches[0];
+	                       touchStartX = touch.pageX;
+	                   }
+	               }).on('touchmove', function(event) {
+	                   var e = event.originalEvent;
+	                   if (touchStartX != null) {
+	                       var touchCurrentX = e.changedTouches[0].pageX;
+	                       if ((touchCurrentX - touchStartX) > 60) {
+	                           touchStartX = null;
+	                           $carousel.carousel('prev');
+	                       } else if ((touchStartX - touchCurrentX) > 60) {
+	                           touchStartX = null;
+	                           $carousel.carousel('next');
+	                       }
+	                   }
+	               }).on('touchend', function() {
+	                   touchStartX = null;
+	               });
+	           });
+	       })(jQuery);
+	</script>
+</body>
+</html>
